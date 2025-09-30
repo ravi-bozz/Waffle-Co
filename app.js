@@ -9,8 +9,8 @@ const MAX_RETRIES = 3;
 
 // Supabase Configuration
 const SUPABASE_CONFIG = {
-    url: 'YOUR_SUPABASE_URL',
-    anonKey: 'YOUR_SUPABASE_ANON_KEY'
+    url: 'https://vgbgzcyesexqljdmhywm.supabase.co',
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZnYmd6Y3llc2V4cWxqZG1oeXdtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkyNDc4MjgsImV4cCI6MjA3NDgyMzgyOH0.aQ6yWLl-Cots4-LVgrmhYYuuJik6AUYd4lfgQe3QlaE'
 };
 
 // Initialize app when DOM is loaded
