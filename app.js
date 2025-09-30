@@ -99,7 +99,7 @@ async function initializeSupabase() {
         }
         
         // Initialize Supabase client
-        supabase = supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
+        supabase = window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
         
         // Test connection
         const { data, error } = await supabase.from('customers').select('count').limit(1);
