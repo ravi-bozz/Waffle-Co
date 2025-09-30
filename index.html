@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>THE WAFFLE CO - Delicious Loyalty Rewards 🧇</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <!-- Connection Status Indicator -->
+    <div id="connectionStatus" class="connection-status">
+        <div class="connection-indicator">
+            <span id="connectionIcon">🌐</span>
+            <span id="connectionText">Connecting...</span>
+        </div>
+    </div>
+
+    <!-- Main Application Container -->
+    <div id="app">
+        <!-- Header with Honey Drips -->
+        <header class="app-header">
+            <div class="honey-drips">
+                <div class="honey-drop"></div>
+                <div class="honey-drop"></div>
+                <div class="honey-drop"></div>
+                <div class="honey-drop"></div>
+                <div class="honey-drop"></div>
+            </div>
+            <div class="container">
+                <div class="header-content">
+                    <div class="shop-logo">
+                        <span class="waffle-icon bouncing">🧇</span>
+                        <h1 class="shop-name">THE WAFFLE CO</h1>
+                        <span class="waffle-icon bouncing">🧇</span>
+                    </div>
+                    <p class="shop-tagline">India's Crunchiest & Tastiest Waffles</p>
+                    <div class="steam-effect">
+                        <div class="steam-particle"></div>
+                        <div class="steam-particle"></div>
+                        <div class="steam-particle"></div>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn--header-toggle touch-friendly" id="viewToggle">
+                        <span class="btn-text">👤 Customer View</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Staff Interface -->
+        <section id="staffInterface" class="main-section">
+            <div class="container">
+                <div class="staff-panel">
+                    <h2 class="section-title">Staff Dashboard</h2>
+                    
+                    <!-- Customer Search -->
+                    <div class="search-section card delicious-card">
+                        <div class="card__body">
+                            <h3 class="card-title">🔍 Find Customer</h3>
+                            <div class="search-form">
+                                <div class="form-group">
+                                    <label class="form-label" for="phoneSearch">Phone Number</label>
+                                    <input type="tel" 
+                                           id="phoneSearch" 
+                                           class="form-control touch-friendly" 
+                                           placeholder="Enter 10-digit phone number" 
+                                           maxlength="10" 
+                                           autocomplete="tel"
+                                           aria-describedby="phoneHelp">
+                                    <small id="phoneHelp" class="form-help">Enter customer's 10-digit mobile number</small>
+                                </div>
+                                <div class="form-actions mobile-stack">
+                                    <button class="btn btn--primary touch-friendly butter-hover" id="searchCustomer">
+                                        <span class="btn-text">🔍 Search Customer</span>
+                                    </button>
+                                    <button class="btn btn--outline touch-friendly butter-hover" id="showRegisterForm">
+                                        <span class="btn-text">➕ New Customer</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Customer Registration Form -->
+                    <div id="registrationForm" class="registration-section card delicious-card hidden">
+                        <div class="card__body">
+                            <h3 class="card-title">📝 Register New Customer</h3>
+                            <form id="customerForm">
+                                <div class="form-group">
+                                    <label class="form-label" for="customerPhone">Phone Number *</label>
+                                    <input type="tel" 
+                                           id="customerPhone" 
+                                           class="form-control touch-friendly" 
+                                           placeholder="10-digit phone number" 
+                                           maxlength="10" 
+                                           autocomplete="tel"
+                                           required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="customerName">Customer Name *</label>
+                                    <input type="text" 
+                                           id="customerName" 
+                                           class="form-control touch-friendly" 
+                                           placeholder="Enter full name" 
+                                           autocomplete="name"
+                                           required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="customerEmail">Email (Optional)</label>
+                                    <input type="email" 
+                                           id="customerEmail" 
+                                           class="form-control touch-friendly" 
+                                           placeholder="customer@example.com"
+                                           autocomplete="email">
+                                </div>
+                                <div class="form-actions mobile-stack">
+                                    <button type="submit" class="btn btn--primary touch-friendly butter-hover">
+                                        <span class="btn-text">🧇 Register & Add First Punch</span>
+                                    </button>
+                                    <button type="button" class="btn btn--outline touch-friendly butter-hover" id="cancelRegister">
+                                        <span class="btn-text">Cancel</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Customer Found Display -->
+                    <div id="customerFound" class="customer-display hidden">
+                        <!-- Customer details will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Customer Interface -->
+        <section id="customerInterface" class="main-section hidden">
+            <div class="container">
+                <div class="customer-panel">
+                    <div class="customer-search-bar card delicious-card">
+                        <div class="card__body">
+                            <h3 class="card-title">🧇 View Your Punch Card</h3>
+                            <div class="search-form">
+                                <div class="form-group">
+                                    <label class="form-label" for="customerPhoneSearch">Your Phone Number</label>
+                                    <input type="tel" 
+                                           id="customerPhoneSearch" 
+                                           class="form-control touch-friendly" 
+                                           placeholder="Enter your phone number" 
+                                           maxlength="10"
+                                           autocomplete="tel">
+                                </div>
+                                <button class="btn btn--primary btn--full-width touch-friendly butter-hover" id="viewMyCard">
+                                    <span class="btn-text">🧇 View My Punch Card</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Customer Card Display -->
+                    <div id="customerCardDisplay" class="customer-card-view hidden">
+                        <!-- Customer card will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Success/Error Messages -->
+        <div id="messageContainer" class="message-container hidden" role="alert" aria-live="polite">
+            <div class="message-content golden-glow">
+                <span id="messageText"></span>
+                <button id="closeMessage" class="message-close touch-friendly" aria-label="Close message">&times;</button>
+            </div>
+        </div>
+
+        <!-- Reward Redemption Modal -->
+        <div id="rewardModal" class="modal hidden" role="dialog" aria-labelledby="modalTitle" aria-modal="true">
+            <div class="modal-content delicious-modal">
+                <div class="modal-header golden-gradient">
+                    <h3 id="modalTitle">🧇 Congratulations!</h3>
+                    <button class="modal-close touch-friendly" id="modalCloseBtn" aria-label="Close modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="reward-celebration">
+                        <div class="waffle-celebration bouncing-celebration">🧇✨🎉✨🧇</div>
+                        <p class="reward-message">Customer has earned a free waffle!</p>
+                        <p class="reward-text golden-text">🎁 One Free Classic Waffle</p>
+                        <p class="reward-note">Ready to redeem now?</p>
+                    </div>
+                </div>
+                <div class="modal-footer mobile-stack">
+                    <button class="btn btn--primary touch-friendly butter-hover" id="confirmRedeem">
+                        <span class="btn-text">🧇 Redeem Now</span>
+                    </button>
+                    <button class="btn btn--outline touch-friendly butter-hover" id="cancelRedeem">
+                        <span class="btn-text">Redeem Later</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div id="loadingIndicator" class="loading-indicator hidden" aria-live="polite">
+            <div class="loading-spinner golden-spinner"></div>
+            <p class="loading-text">Processing your delicious request...</p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
